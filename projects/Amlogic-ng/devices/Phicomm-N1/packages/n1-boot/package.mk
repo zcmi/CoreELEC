@@ -4,18 +4,17 @@ PKG_LICENSE="GPL"
 PKG_DEPENDS_TARGET="toolchain u-boot-tools-aml u-boot-script"
 PKG_DEPENDS_UNPACK="linux"
 PKG_TOOLCHAIN="manual"
-
 PKG_NEED_UNPACK="$PKG_DIR/sources $PROJECT_DIR/$PROJECT/devices/$DEVICE/bootloader "
 
 make_target() {
   # Enter kernel directory
   pushd $BUILD/linux-$(kernel_version) > /dev/null
   
-  cp -av $PKG_DIR/sources/meson-gxl-s905d-phicomm-n1.dts arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/
+  cp -av $PKG_DIR/sources/meson-gxl-s905d-phicomm-n1.dts arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/coreelec-gxl/
   
   # Compile device trees
-  kernel_make meson-gxl-s905d-phicomm-n1.dtb
-  cp arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/*.dtb $PKG_BUILD
+  kernel_make coreelec-gxl/meson-gxl-s905d-phicomm-n1.dtb
+  cp arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/coreelec-gxl/*.dtb $PKG_BUILD
   
   popd > /dev/null
 }
@@ -47,6 +46,6 @@ makeinstall_target() {
   
   # Install dtb file
   mkdir -p $INSTALL/usr/share/bootloader/device_trees
-  cp -a $PKG_BUILD/*.dtb $INSTALL/usr/share/bootloader/device_trees
+  cp -av $PKG_BUILD/*.dtb $INSTALL/usr/share/bootloader/device_trees
       
 }

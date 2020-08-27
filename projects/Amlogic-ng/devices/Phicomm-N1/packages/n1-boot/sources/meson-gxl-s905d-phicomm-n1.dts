@@ -7,7 +7,7 @@
 
 / {
 	compatible = "phicomm,n1", "amlogic,s905d", "amlogic,meson-gxl";
-	model = "Phicomm N1";
+	model = "Phicomm,N1";
 
 	cvbs-connector {
 		status = "disabled";
