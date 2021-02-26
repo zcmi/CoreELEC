@@ -1,2 +1,2 @@
 #!/bin/bash
-PROJECT=Amlogic ARCH=arm DEVICE=Phicomm-N1 CUSTOM_VERSION=9.2.5 make image
+PROJECT=Amlogic ARCH=arm DEVICE=Phicomm-N1 CUSTOM_VERSION=9.2.6 make image
