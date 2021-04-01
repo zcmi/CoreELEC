@@ -64,5 +64,9 @@ if [ "${SUBDEVICE}" != "Generic" ]; then
       mcopy $RELEASE_DIR/3rdparty/bootloader/libretech_chain_boot "::/boot.scr"
     fi
   fi
+  
+  if [ "${SUBDEVICE}" == "Phicomm_N1" ]; then
+    mcopy $RELEASE_DIR/3rdparty/bootloader/uInitrd ::
+  fi
 
 fi
