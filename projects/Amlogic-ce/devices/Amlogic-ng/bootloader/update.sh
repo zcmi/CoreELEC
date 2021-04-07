@@ -187,6 +187,21 @@ if [ -f $BOOT_ROOT/aml_autoscript ]; then
   fi
 fi
 
+# Phicomm_N1
+if [ "${SUBDEVICE}" == "Phicomm_N1" ]; then
+  if [ -f $SYSTEM_ROOT/usr/share/bootloader/s905_autoscript ]; then
+    echo "Updating s905_autoscript..."
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/s905_autoscript $BOOT_ROOT
+    sleep 1
+  fi
+
+  if [ -f $SYSTEM_ROOT/usr/share/bootloader/uInitrd ]; then
+    echo "Updating uInitrd..."
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/uInitrd $BOOT_ROOT
+    sleep 1
+  fi
+fi
+
 mount -o ro,remount $BOOT_ROOT
 
 # Leave a hint that we just did an update
