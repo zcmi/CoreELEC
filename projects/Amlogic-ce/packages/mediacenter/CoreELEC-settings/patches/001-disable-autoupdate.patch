@@ -1,0 +1,13 @@
+diff --git a/src/resources/lib/modules/updates.py b/src/resources/lib/modules/updates.py
+index 4967082..3d38990 100644
+--- a/src/resources/lib/modules/updates.py
++++ b/src/resources/lib/modules/updates.py
+@@ -44,7 +44,7 @@ class updates:
+                     'settings': {
+                         'AutoUpdate': {
+                             'name': 32014,
+-                            'value': 'auto',
++                            'value': 'manual',
+                             'action': 'set_auto_update',
+                             'type': 'multivalue',
+                             'values': ['auto', 'manual'],
