@@ -43,6 +43,16 @@ makeinstall_target() {
     unset PKG_UBOOTBIN
     unset PKG_CHAINUBOOTBIN
     find_file_path bootloader/${PKG_SUBDEVICE}_boot.ini && cp -av ${FOUND_PATH} $INSTALL/usr/share/bootloader
+    
+    # Phicommon_N1
+    for src in $INSTALL/usr/share/bootloader/*_boot.ini ; do
+      sed -e "s/@BOOT_LABEL@/$DISTRO_BOOTLABEL/g" \
+          -e "s/@DISK_LABEL@/$DISTRO_DISKLABEL/g" \
+          -i "$src"
+      sed -e "s/@DTB_NAME@/$DEFAULT_DTB_NAME/g" \
+          -i "$src"
+    done
+    
     if [ $PKG_SUBDEVICE = "Odroid_N2" -o $PKG_SUBDEVICE = "Odroid_C4" -o $PKG_SUBDEVICE = "Odroid_HC4" ]; then
       if [ $PKG_SUBDEVICE != "Odroid_HC4" ]; then
         PKG_UBOOTBIN=$(get_build_dir u-boot-${PKG_SUBDEVICE})/sd_fuse/u-boot.bin.sd.bin
