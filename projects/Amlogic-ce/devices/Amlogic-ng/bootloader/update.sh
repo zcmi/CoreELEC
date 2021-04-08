@@ -188,19 +188,30 @@ if [ -f $BOOT_ROOT/aml_autoscript ]; then
 fi
 
 # Phicomm_N1
-if [ "${SUBDEVICE}" == "Phicomm_N1" ]; then
-  if [ -f $SYSTEM_ROOT/usr/share/bootloader/s905_autoscript ]; then
-    echo "Updating s905_autoscript..."
-    cp -p $SYSTEM_ROOT/usr/share/bootloader/s905_autoscript $BOOT_ROOT
-    sleep 1
-  fi
-
-  if [ -f $SYSTEM_ROOT/usr/share/bootloader/uInitrd ]; then
-    echo "Updating uInitrd..."
-    cp -p $SYSTEM_ROOT/usr/share/bootloader/uInitrd $BOOT_ROOT
-    sleep 1
-  fi
+echo "Updating Phicomm_N1 boot files..."
+if [ -f $SYSTEM_ROOT/usr/share/bootloader/s905_autoscript ]; then
+  echo "Updating s905_autoscript..."
+  cp -p $SYSTEM_ROOT/usr/share/bootloader/s905_autoscript $BOOT_ROOT
+  sleep 1
 fi
+
+if [ -f $SYSTEM_ROOT/usr/share/bootloader/Phicomm_N1_boot.ini ]; then
+  echo "Updating boot.ini with Phicomm_N1_boot.ini..."
+  cp -p $SYSTEM_ROOT/usr/share/bootloader/Phicomm_N1_boot.ini $BOOT_ROOT/boot.ini
+  sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
+      -e "s/@DISK_UUID@/$DISK_UUID/" \
+      -i $BOOT_ROOT/boot.ini
+  sleep 1
+fi
+
+[ -z "$UPDATE_DIR" ] && UPDATE_DIR="/storage/.update"
+if [ -f $UPDATE_DIR/.tmp/*/3rdparty/bootloader/uInitrd ]; then
+  echo "Updating uInitrd..."
+  cp -p $UPDATE_DIR/.tmp/*/3rdparty/bootloader/uInitrd $BOOT_ROOT
+  sleep 1
+fi
+echo "Phicomm_N1 boot files updated."
+sleep 2
 
 mount -o ro,remount $BOOT_ROOT
 
