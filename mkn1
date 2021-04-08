@@ -1,2 +1,2 @@
 #!/bin/bash
-BUILDER_NAME=RuralHunter CUSTOM_VERSION=19.0 make image
+BUILDER_NAME=RuralHunter CUSTOM_VERSION=19.1 make image
