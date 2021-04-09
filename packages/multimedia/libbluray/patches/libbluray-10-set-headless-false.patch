@@ -1,0 +1,14 @@
+https://github.com/fandangos/libbluray/commit/47726b99922899bb9c4ea688356199f2068d156a
+https://github.com/PojavLauncherTeam/PojavLauncher/issues/713#issuecomment-769816262
+
+--- a/src/libbluray/bdj/bdj.c	2021-03-17 06:39:32.556230104 +0100
++++ b/src/libbluray/bdj/bdj.c	2021-03-17 06:40:52.178905094 +0100
+@@ -873,6 +873,8 @@ static int _create_jvm(void *jvm_lib, co
+     option[n++].optionString = str_dup   ("-Xms256M");
+     option[n++].optionString = str_dup   ("-Xmx256M");
+     option[n++].optionString = str_dup   ("-Xss2048k");
++    option[n++].optionString = str_dup   ("-Djava.awt.headless=false");
++    BD_DEBUG(DBG_CRIT | DBG_BDJ, "Disable X11 check\n");
+ #ifdef HAVE_BDJ_J2ME
+     option[n++].optionString = str_printf("-Djava.home=%s", java_home);
+     option[n++].optionString = str_printf("-Xbootclasspath/a:%s/lib/xmlparser.jar", java_home);
