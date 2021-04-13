@@ -1,0 +1,58 @@
+diff --git a/xbmc/cores/VideoPlayer/VideoPlayer.cpp b/xbmc/cores/VideoPlayer/VideoPlayer.cpp
+index 7b09562342..81e72c622a 100644
+--- a/xbmc/cores/VideoPlayer/VideoPlayer.cpp
++++ b/xbmc/cores/VideoPlayer/VideoPlayer.cpp
+@@ -935,10 +935,7 @@ void CVideoPlayer::OpenDefaultStreams(bool reset)
+     if (OpenStream(m_CurrentSubtitle, stream.demuxerId, stream.id, stream.source))
+     {
+       valid = true;
+-      if(!psp.relevant(stream))
+-        visible = false;
+-      else if(stream.flags & StreamFlags::FLAG_FORCED)
+-        visible = true;
++      visible = true;
+       break;
+     }
+   }
+diff --git a/xbmc/video/VideoInfoDownloader.cpp b/xbmc/video/VideoInfoDownloader.cpp
+index 8048647d11..c8bd91eca6 100644
+--- a/xbmc/video/VideoInfoDownloader.cpp
++++ b/xbmc/video/VideoInfoDownloader.cpp
+@@ -97,6 +97,28 @@ void CVideoInfoDownloader::Process()
+   m_state = DO_NOTHING;
+ }
+ 
++std::string parseMovieTitle(const std::string &title)
++{
++    CLog::Log(LOGDEBUG,"Parsing movie title: %s", title.c_str());
++    //fix for CMCT style names
++    size_t start=0;    //the position actual name should start
++    if(title.at(0)=='[') //CMCT style
++    {
++        start=title.find(']');
++        if(start != std::string::npos) //found end
++        {
++            start++;
++            if(title.at(start)=='.')//skip '.'
++                start++;
++        }
++        if(start>=title.size() || start<0) //don't skip if the '[]' includes the whole filename
++            start=0;
++    }    
++    std::string actual=title.substr(start);
++    CLog::Log(LOGDEBUG,"Parsed actual title name: %s", actual.c_str());
++    return actual;
++}
++
+ int CVideoInfoDownloader::FindMovie(const std::string &movieTitle, int movieYear,
+                                     MOVIELIST& movieList,
+                                     CGUIDialogProgress *pProgress /* = NULL */)
+@@ -106,7 +128,7 @@ int CVideoInfoDownloader::FindMovie(const std::string &movieTitle, int movieYear
+   if (pProgress)
+   { // threaded version
+     m_state = FIND_MOVIE;
+-    m_movieTitle = movieTitle;
++    m_movieTitle = parseMovieTitle(movieTitle);
+     m_movieYear = movieYear;
+     m_found = 0;
+     if (IsRunning())
