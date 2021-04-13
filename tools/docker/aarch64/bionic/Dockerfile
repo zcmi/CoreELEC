@@ -19,11 +19,11 @@ RUN adduser --disabled-password --gecos '' docker \
 
 RUN apt-get update && apt-get install -y \
     wget bash bc gcc sed patch patchutils tar bzip2 gzip perl gawk gperf zip unzip diffutils texinfo lzop python python3 \
-    g++ xfonts-utils xfonts-utils xfonts-utils xsltproc default-jre-headless \
-    libc6-dev libncurses5-dev \
+    g++ xfonts-utils xfonts-utils xfonts-utils xsltproc default-jre-headless cpio \
+    libc6-dev libncurses5-dev libssl-dev \
     u-boot-tools \
     xz-utils make file libxml-parser-perl \
-    libjson-perl \
+    libjson-perl libparse-yapp-perl \
     golang-go \
     git openssh-client \
     qemu-user-binfmt \
