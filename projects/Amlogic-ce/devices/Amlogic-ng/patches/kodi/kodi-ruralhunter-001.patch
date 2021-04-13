@@ -15,17 +15,17 @@ index 7b09562342..81e72c622a 100644
      }
    }
 diff --git a/xbmc/video/VideoInfoDownloader.cpp b/xbmc/video/VideoInfoDownloader.cpp
-index 8048647d11..c8bd91eca6 100644
+index 8048647d11..79a453680c 100644
 --- a/xbmc/video/VideoInfoDownloader.cpp
 +++ b/xbmc/video/VideoInfoDownloader.cpp
 @@ -97,6 +97,28 @@ void CVideoInfoDownloader::Process()
    m_state = DO_NOTHING;
  }
  
++//fix for CMCT style names
 +std::string parseMovieTitle(const std::string &title)
 +{
 +    CLog::Log(LOGDEBUG,"Parsing movie title: %s", title.c_str());
-+    //fix for CMCT style names
 +    size_t start=0;    //the position actual name should start
 +    if(title.at(0)=='[') //CMCT style
 +    {
