@@ -1,3 +1,4 @@
+if test ${bootfromnand} = 1; then setenv bootfromnand 0; saveenv; run storeboot; fi;
 setenv env_addr "0x10400000"
 setenv kernel_addr "0x11000000"
 setenv initrd_addr "0x13000000"
