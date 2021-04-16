@@ -47,7 +47,7 @@ index 55c252e2..6e7550a6 100644
  libbluray_la_SOURCES += \
  	src/libbluray/disc/udf_fs.h \
  	src/libbluray/disc/udf_fs.c\
-@@ -177,6 +183,7 @@ libbluray_la_SOURCES += \
+@@ -178,6 +184,7 @@ libbluray_la_SOURCES += \
  	contrib/libudfread/src/udfread.h \
  	contrib/libudfread/src/udfread.c
  endif
@@ -64,10 +64,10 @@ index 55c252e2..6e7550a6 100644
  
  if USING_JAVAC_9
 diff --git a/configure.ac b/configure.ac
-index bf4ace12..af14f619 100644
+index e0e80cc..4d3625c 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -85,6 +85,11 @@ AC_ARG_ENABLE([examples],
+@@ -86,6 +86,11 @@ AC_ARG_ENABLE([examples],
    [use_examples=$enableval],
    [use_examples=yes])
  
@@ -79,30 +79,53 @@ index bf4ace12..af14f619 100644
  AC_ARG_ENABLE([bdjava-jar],
    [AS_HELP_STRING([--disable-bdjava-jar],
    [disable building of BD-Java JAR file @<:@default=enabled@:>@])],
-@@ -284,7 +284,7 @@ AM_CONDITIONAL([BDJ_J2SE], [ test x"$BDJ
+@@ -262,8 +267,11 @@ AS_IF([test "x$use_bdjava_jar" = "xyes"], [
+     AS_IF([test "x$with_java12" = "xyes" -a "$BDJ_TYPE" != "j2me"], [java_code_version=1.7])
+ ])
+ 
++AC_DEFINE([USING_BDJAVA], [1], ["Define to 1 if using BD-Java"])
+ AC_DEFINE_UNQUOTED([JAVA_ARCH], ["$java_arch"], ["Defines the architecture of the java vm."])
+ AC_DEFINE_UNQUOTED([JDK_HOME], ["$JDK_HOME"], [""])
++AM_CONDITIONAL([USING_BDJAVA], [ test $use_bdjava = "yes" ])
++
+ AM_CONDITIONAL([USING_BDJAVA_BUILD_JAR], [ test $use_bdjava_jar = "yes" ])
+ AM_CONDITIONAL([USING_JAVAC_9], [ test x"$with_java9" = x"yes" ])
+ AM_CONDITIONAL([USING_JAVAC_12], [ test x"$with_java12" = x"yes" ])
+@@ -279,7 +287,25 @@ AM_CONDITIONAL([BDJ_J2SE], [ test x"$BDJ_TYPE" != x"j2me" ])
  dnl bootclasspath
  AC_SUBST(BDJ_BOOTCLASSPATH)
  
 -PKG_CHECK_MODULES([LIBUDFREAD], [udfread >= 1.1.0],
++dnl udf support (using git submodule)
++AS_IF([test "x$enable_udf" = "xyes"], [
++if test ! -f "${srcdir}/contrib/libudfread/src/udfread.h"; then
++    AC_MSG_ERROR("libudfread source tree not found")
++fi
++AC_CHECK_HEADERS([unistd.h fcntl.h])
++    AS_IF([test "${SYS}" != "mingw32"], [
++      AC_CHECK_FUNC([pread],, [AC_MSG_ERROR("Function pread not found. Try with --disable-udf.")])
++    ])
++
++    AC_DEFINE([ENABLE_UDF], [1], [Define to 1 if libudfread is to be used for disc image access])
++    UDF_CFLAGS='-I${srcdir}/contrib/libudfread/src/'
++    AC_SUBST(UDF_CFLAGS)
++    ],
++  [enable_udf=no])
++
++AM_CONDITIONAL([ENABLE_UDF], [test $enable_udf = "yes" ])
++
 +PKG_CHECK_MODULES([LIBUDFREAD], [libudfread >= 1.1.0],
      [with_libudfread=yes
       AC_DEFINE([HAVE_LIBUDFREAD], [1], [Define to 1 if external libudfread is to be used])
       PACKAGES="$PACKAGES libudfread >= 1.1.0"
-@@ -292,6 +292,7 @@ PKG_CHECK_MODULES([LIBUDFREAD], [udfread
-          AC_CHECK_FUNC([pread],, [AC_DEFINE([NEED_PREAD_IMPL], [1], [Define to 1 to use inefficient pread() replacement])])])
- ])
- AM_CONDITIONAL([HAVE_LIBUDFREAD], [ test x"$with_libudfread" = x"yes" ])
-+AM_CONDITIONAL([ENABLE_UDF], 1)
+@@ -322,6 +348,7 @@ dnl ---------------------------------------------
  
- dnl generate documentation
- DX_INIT_DOXYGEN(libbluray, doc/doxygen-config, [doc/doxygen])
-@@ -330,5 +344,6 @@ echo "  Use system fonts:              yes"
- fi
- fi
- echo "  Metadata support (libxml2):    $with_libxml2"
-+echo "  UDF filesystem support:        $enable_udf"
- echo "  External libudfread:           $with_libudfread"
- echo "  Build examples:                $use_examples"
+ echo "  Summary:"
+ echo "  --------"
++echo "  BD-J support:                  $use_bdjava"
+ echo "  BD-J type:                     $BDJ_TYPE"
+ echo "  build JAR:                     $use_bdjava_jar"
+ if test "x$use_bdjava_jar" = "xyes"; then
  
 diff --git a/src/libbluray/disc/disc.c b/src/libbluray/disc/disc.c
 index 6d555a1d..5baa9be2 100644
