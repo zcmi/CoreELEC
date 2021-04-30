@@ -23,7 +23,6 @@ make_target() {
 makeinstall_target() {
   # Install dtb file
   mkdir -p $INSTALL/usr/share/bootloader  
-  #cp -av $BUILD/build/linux-$(kernel_version)/arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/coreelec-gxl/gxl_p230_2g.dtb $INSTALL/usr/share/bootloader/Phicomm_N1_dtb.img
   cp -av $BUILD/build/linux-$(kernel_version)/arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/coreelec-gxl/$DT_ID.dtb $INSTALL/usr/share/bootloader/Phicomm_N1_dtb.img
   
   # For update
