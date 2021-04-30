@@ -14,4 +14,10 @@
 	cvbs-connector {
 		status = "disabled";
 	};
+	
+	dwc2_a {
+		controller-type = <1>; /** 0: normal,1:host,2:device,3:otg*/
+	};
 };
+
+
