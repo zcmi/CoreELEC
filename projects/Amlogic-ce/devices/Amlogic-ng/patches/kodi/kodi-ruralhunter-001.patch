@@ -1,8 +1,8 @@
 diff --git a/xbmc/cores/VideoPlayer/VideoPlayer.cpp b/xbmc/cores/VideoPlayer/VideoPlayer.cpp
-index 7b09562342..81e72c622a 100644
+index 0530f0fc60..56de7c94fc 100644
 --- a/xbmc/cores/VideoPlayer/VideoPlayer.cpp
 +++ b/xbmc/cores/VideoPlayer/VideoPlayer.cpp
-@@ -935,10 +935,7 @@ void CVideoPlayer::OpenDefaultStreams(bool reset)
+@@ -937,10 +937,7 @@ void CVideoPlayer::OpenDefaultStreams(bool reset)
      if (OpenStream(m_CurrentSubtitle, stream.demuxerId, stream.id, stream.source))
      {
        valid = true;
