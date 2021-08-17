@@ -15,17 +15,17 @@ index 0530f0fc60..56de7c94fc 100644
      }
    }
 diff --git a/xbmc/video/VideoInfoDownloader.cpp b/xbmc/video/VideoInfoDownloader.cpp
-index 8048647d11..a50828ad4a 100644
+index 8048647d11..e73241231f 100644
 --- a/xbmc/video/VideoInfoDownloader.cpp
 +++ b/xbmc/video/VideoInfoDownloader.cpp
-@@ -97,16 +97,38 @@ void CVideoInfoDownloader::Process()
-   m_state = DO_NOTHING;
- }
+@@ -21,6 +21,28 @@ using namespace KODI::MESSAGING;
+ #pragma warning (disable:4018)
+ #endif
  
 +//fix for CMCT style names
 +std::string parseMovieTitle(const std::string &title)
 +{
-+    CLog::Log(LOGDEBUG,"Parsing movie title: %s", title.c_str());
++    CLog::Log(LOGINFO,"Parsing movie title: %s", title.c_str());
 +    size_t start=0;    //the position actual name should start
 +    if(title.at(0)=='[') //CMCT style
 +    {
@@ -40,21 +40,19 @@ index 8048647d11..a50828ad4a 100644
 +            start=0;
 +    }    
 +    std::string actual=title.substr(start);
-+    CLog::Log(LOGDEBUG,"Parsed actual title name: %s", actual.c_str());
++    CLog::Log(LOGINFO,"Parsed actual title name: %s", actual.c_str());
 +    return actual;
 +}
 +
- int CVideoInfoDownloader::FindMovie(const std::string &movieTitle, int movieYear,
-                                     MOVIELIST& movieList,
-                                     CGUIDialogProgress *pProgress /* = NULL */)
+ CVideoInfoDownloader::CVideoInfoDownloader(const ADDON::ScraperPtr &scraper) :
+   CThread("VideoInfoDownloader"), m_state(DO_NOTHING), m_found(0), m_info(scraper)
  {
-   //CLog::Log(LOGDEBUG,"CVideoInfoDownloader::FindMovie(%s)", strMovie.c_str());
- 
-+  m_movieTitle = parseMovieTitle(movieTitle);
-   if (pProgress)
-   { // threaded version
-     m_state = FIND_MOVIE;
--    m_movieTitle = movieTitle;
-     m_movieYear = movieYear;
-     m_found = 0;
-     if (IsRunning())
+@@ -39,7 +61,7 @@ int CVideoInfoDownloader::InternalFindMovie(const std::string &movieTitle, int m
+ {
+   try
+   {
+-    movielist = m_info->FindMovie(*m_http, movieTitle, movieYear, cleanChars);
++    movielist = m_info->FindMovie(*m_http, parseMovieTitle(movieTitle), movieYear, cleanChars);
+   }
+   catch (const ADDON::CScraperError &sce)
+   {
