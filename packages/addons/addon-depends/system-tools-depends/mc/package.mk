@@ -3,8 +3,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mc"
-PKG_VERSION="4.8.25"
-PKG_SHA256="ffc19617f20ebb23330acd3998b7fd559a042d172fa55746d53d246697b2548a"
+PKG_VERSION="4.8.27"
+PKG_SHA256="31be59225ffa9920816e9a8b3be0ab225a16d19e4faf46890f25bdffa02a4ff4"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.midnight-commander.org"
 PKG_URL="http://ftp.midnight-commander.org/mc-${PKG_VERSION}.tar.xz"
@@ -38,6 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET=" \
 
 pre_configure_target() {
   LDFLAGS+=" -lcrypto -lssl"
+  CFLAGS+=' -DNCURSES_WIDECHAR=0'
 }
 
 post_makeinstall_target() {

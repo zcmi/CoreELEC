@@ -24,7 +24,7 @@
         ;;
       arm)
         TARGET_KERNEL_ARCH="arm64"
-        TARGET_PATCH_ARCH="aarch64"
+        TARGET_KERNEL_PATCH_ARCH="aarch64"
         TARGET_FLOAT="hard"
         TARGET_CPU="cortex-a53"
         TARGET_CPU_FLAGS="+crc"
@@ -155,5 +155,4 @@
     ENTWARE_ARCH="aarch64-k3.10"
 
   # CoreELEC Subdevices
-    #SUBDEVICES="Odroid_N2 Odroid_C4 Odroid_HC4 LePotato LaFrite Phicomm_N1"
     SUBDEVICES="Phicomm_N1"

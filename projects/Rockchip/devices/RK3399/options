@@ -12,7 +12,7 @@
         ;;
       arm)
         TARGET_KERNEL_ARCH="arm64"
-        TARGET_PATCH_ARCH="aarch64"
+        TARGET_KERNEL_PATCH_ARCH="aarch64"
         TARGET_FLOAT="hard"
         TARGET_CPU="cortex-a72.cortex-a53"
         TARGET_CPU_FLAGS="+crc"
@@ -33,3 +33,6 @@
 
   # set the addon project
     ADDON_PROJECT="ARMv8"
+
+  # additional packages
+    ADDITIONAL_PACKAGES+=" pciutils"
