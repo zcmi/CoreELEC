@@ -1,3 +1,13 @@
+# CoreELEC for Phicomm N1
+1. Only installation on USB drivers is verified and supported.
+2. Auto update is disabled.
+3. Added ipset module in kernel
+4. Added BD-J menu patch from vpeter: https://discourse.coreelec.org/t/java-for-bd-j-menus/554
+5. Show subtitles by default.
+
+# Upgrade
+Put the update package(CoreELEC-Amlogic-ng.arm-xxx.tar) in /storage/.update/, then reboot.
+
 # CoreELEC
 
 CoreELEC is a 'Just enough OS' Linux distribution for running the award-winning [Kodi](https://kodi.tv) software on popular low-cost hardware. CoreELEC is a minor fork of [LibreELEC](https://libreelec.tv), it's built by the community for the community. [CoreELEC website](http://coreelec.org).
