@@ -1,7 +1,7 @@
 PKG_NAME="u-boot-Phicomm_N1"
 PKG_VERSION="1.0"
 PKG_LICENSE="GPL"
-PKG_DEPENDS_TARGET="toolchain u-boot-tools-aml u-boot-script"
+PKG_DEPENDS_TARGET="toolchain u-boot-tools u-boot-script"
 PKG_DEPENDS_UNPACK="linux"
 PKG_TOOLCHAIN="manual"
 
