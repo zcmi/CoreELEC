@@ -7,7 +7,7 @@ PKG_NAME="jre-libbluray"
 PKG_DEPENDS_TARGET+=" apache-ant:host"
 PKG_LONGDESC="libbluray jar for BD-J menus"
 PKG_URL=""
-PKG_DEPENDS_UNPACK+=" jdk-x86_64-zulu"
+PKG_DEPENDS_UNPACK+=" jdk-x86_64-zulu libbluray"
 PKG_PATCH_DIRS+=" $(get_pkg_directory libbluray)/patches"
 PKG_BUILD_FLAGS="-sysroot"
 
