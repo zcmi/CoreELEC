@@ -4,8 +4,8 @@
 # Copyright (C) 2020-present Team CoreELEC (https://coreelec.tv)
 
 PKG_NAME="kodi"
-PKG_VERSION="318af6d834f1d3fb9439c62d60c63d12208421a3"
-PKG_SHA256="493f5f48a6158ab8f54633646dae4c5b00bfcb2c8561e62df2bb2efb324d0cda"
+PKG_VERSION="41d819a51cafb7228ca10108a64cb1b7e06b43b3"
+PKG_SHA256="fc022b18c8098842c885a9348f57720d781d53e393436cc7bf471ce48b0bdccf"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="https://github.com/CoreELEC/xbmc/archive/$PKG_VERSION.tar.gz"
@@ -21,6 +21,10 @@ post_unpack() {
 
   sed -e "s|@ADDON_REPO_ID@|$ADDON_REPO_ID|g" -i $(get_build_dir ${PKG_NAME})/version.txt
   sed -e "s|@ADDON_SERVER_URL@|$ADDON_SERVER_URL|g" -i $(get_build_dir ${PKG_NAME})/version.txt
+
+  # don't build internal TexturePacker
+  sed -i 's|set(INTERNAL_TEXTUREPACKER_INSTALLABLE TRUE)|set(INTERNAL_TEXTUREPACKER_INSTALLABLE FALSE)|' \
+    $(get_build_dir ${PKG_NAME})/cmake/modules/FindTexturePacker.cmake
 }
 
 configure_package() {
