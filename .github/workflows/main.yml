@@ -36,8 +36,9 @@ jobs:
       - name: Cache downloaded packages
         uses: actions/cache@v2
         with:
-          path: sources
-          key: ${{ runner.os }}-${{ hashFiles('./mkn1') }}
+          path: |
+                sources
+          key: CoreELEC-Phicomm-N1-sources-${{ runner.os }}-${{ hashFiles('./mkn1') }}
 
       - name: Run build
         run: ./mkn1
