@@ -1,5 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
+#Simple workfow to build CoreELEC for Phicomm N1
 name: CI
 
 # Controls when the workflow will run
@@ -33,8 +32,13 @@ jobs:
           sudo -E apt-get -qq update
           sudo -E apt-get install gcc make git unzip wget xz-utils bc gperf zip unzip g++  build-essential patchutils lzop xfonts-utils xsltproc libjson-perl cmake texinfo default-jre libncurses5-dev file zstd libparse-yapp-perl
           sudo -E apt-get -qq autoremove --purge
-        
-      # Runs main build script
+
+      - name: Cache downloaded packages
+        uses: actions/cache@v2
+        with:
+          path: sources
+          key: ${{ runner.os }}-${{ hashFiles('./mkn1') }}
+
       - name: Run build
         run: ./mkn1
       
