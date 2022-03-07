@@ -58,8 +58,11 @@ for arg in $(cat /proc/cmdline); do
           *meson_gxl_s905d_phicomm_n1)
             SUBDEVICE="Phicomm_N1"
             ;;
-          *radxa_zero*)
+          *radxa_zero)
             SUBDEVICE="Radxa_Zero"
+            ;;
+          *radxa_zero2)
+            SUBDEVICE="Radxa_Zero2"
             ;;
         esac
       fi
@@ -150,7 +153,7 @@ if [ "${SUBDEVICE}" == "LePotato" -o "${SUBDEVICE}" == "LaFrite" ]; then
   fi
 fi
 
-if [ "${SUBDEVICE}" == "Radxa_Zero" ]; then
+if [ "${SUBDEVICE:0:10}" == "Radxa_Zero" ]; then
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/radxa-boot-logo-1080.bmp.gz ]; then
     echo "Updating boot logos..."
     cp -p $SYSTEM_ROOT/usr/share/bootloader/radxa-boot-logo-1080.bmp.gz $BOOT_ROOT/boot-logo-1080.bmp.gz
