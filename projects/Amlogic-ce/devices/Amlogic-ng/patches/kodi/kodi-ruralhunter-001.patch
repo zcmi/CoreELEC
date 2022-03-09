@@ -1,5 +1,5 @@
 diff --git a/xbmc/cores/VideoPlayer/VideoPlayer.cpp b/xbmc/cores/VideoPlayer/VideoPlayer.cpp
-index a8c784704a..0220df666c 100644
+index 262ab3c412..cd1cbfeed9 100644
 --- a/xbmc/cores/VideoPlayer/VideoPlayer.cpp
 +++ b/xbmc/cores/VideoPlayer/VideoPlayer.cpp
 @@ -937,10 +937,7 @@ void CVideoPlayer::OpenDefaultStreams(bool reset)
