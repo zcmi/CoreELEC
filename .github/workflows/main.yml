@@ -43,3 +43,10 @@ jobs:
       - name: Run build
         run: ./mkn1
       
+      - name: Upload ARTIFACT
+        uses: actions/upload-artifact@v3
+        with:
+          name: CoreELEC-19.5rc2
+          path: |
+            target/*
+          retention-days: 5
