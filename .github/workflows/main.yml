@@ -22,7 +22,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Initialization Environment
         run: |
@@ -34,7 +34,7 @@ jobs:
           sudo -E apt-get -qq autoremove --purge
 
       - name: Cache downloaded packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
                 sources
@@ -46,7 +46,7 @@ jobs:
       - name: Upload ARTIFACT
         uses: actions/upload-artifact@v3
         with:
-          name: CoreELEC-19.5rc2
+          name: CoreELEC-19.5rc3
           path: |
             target/*Phicomm_N1.img*
           retention-days: 5
