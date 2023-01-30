@@ -1,3 +1,12 @@
+120
+- Update FFmpeg to 4.4.3
+
+119
+- Update FFmpeg to 4.4.2
+
+118
+- fix missing libraries
+
 117
 - Update aom (AV1) to 3.2.0
 - Update VPX to 1.11.0

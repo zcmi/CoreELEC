@@ -1,3 +1,9 @@
+127
+- rebuild including missing library
+
+126
+- rebuild with FFmpeg 4.4.3
+
 125
 - fix download zipped content for epg data with epg_grab_file
 
